@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    enabled: true
+    contexts: dev
+    default-schema: public
+    url: jdbc:postgresql://localhost:5432/mydatabase
+    user: root
+    password: root
+    drop-first: false

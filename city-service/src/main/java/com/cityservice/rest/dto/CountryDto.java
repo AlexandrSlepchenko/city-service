@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CityDto {
+public class CountryDto {
     private Long id;
     private String name;
-    private Long countryId;
-    private String logo;
 }

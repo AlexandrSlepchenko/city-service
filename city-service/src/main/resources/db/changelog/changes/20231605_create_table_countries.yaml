@@ -1,6 +1,26 @@
 databaseChangeLog:
   - changeSet:
-      id: 0
-      author: admin
+      id: 20231605_create_table_countries.yaml
+      author: Sliepchenko Aleksandr
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: countries
       changes:
-        -
+        - createTable:
+            tableName: countries
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true

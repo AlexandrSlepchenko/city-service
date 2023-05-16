@@ -2,9 +2,10 @@ package com.cityservice.service;
 
 import com.cityservice.rest.dto.CityDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CityService {
-    Page<CityDto> findUniqueCitiesName(int page, int size);
+    Page<CityDto> findUniqueCitiesName(Pageable pageable);
 
-    Page<CityDto> findCitiesByCountryName(String countryName, int page, int size);
+    Page<CityDto> findCitiesByCountryName(Pageable pageable, String countryName);
 }

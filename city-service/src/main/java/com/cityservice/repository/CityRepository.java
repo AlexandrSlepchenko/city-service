@@ -20,5 +20,5 @@ public interface CityRepository extends JpaRepository<City, Long> {
             join countries cn on ct.country = cn.id
             where cn =: countryName
                 """, nativeQuery = true)
-    Page<City> findCitiesByCountryName(String countryName, Pageable pageable);
+    Page<City> findCitiesByCountryName(Pageable pageable, String countryName);
 }
