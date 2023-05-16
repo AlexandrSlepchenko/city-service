@@ -26,7 +26,7 @@ public interface CityMapper {
     @Mapping(target = "country", expression = "java(CountryMapper.INSTANCE.countryDTOToCountry(cityDTO))")
     City cityDTOToCity(CityDto cityDTO);
 
-    @Mapping(target = "logo", source = "logo") // Assuming the logo field in CityDto is a string representing the logo path
+    @Mapping(target = "logo", source = "logo")
     CityDto cityToDto(City city);
 
     default Page<CityDto> mapPageToDto(Page<City> cityPage) {

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 20231605_create_table_countries.yaml
+      id: 20231605_create_table_countries
       author: Sliepchenko Aleksandr
       preConditions:
         - onFail: MARK_RAN

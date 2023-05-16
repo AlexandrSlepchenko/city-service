@@ -1,6 +1,32 @@
 databaseChangeLog:
   - changeSet:
-      id: 0
-      author: admin
+      id: 20230516_create_table_cities
+      author: Sliepchenko Aleksandr
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: cities
       changes:
-        -
+        - createTable:
+            tableName: cities
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    references: countries(id)
+              - column:
+                  name: logo
+                  type: varchar(255)
