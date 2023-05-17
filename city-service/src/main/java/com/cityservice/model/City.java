@@ -1,15 +1,16 @@
 package com.cityservice.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -22,12 +23,11 @@ public class City {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "city_name.id", nullable = false)
-    private CityName name;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "country.id", nullable = false)
+    @JoinColumn(name = "country", nullable = false)
     private Country country;
 
     @Column(name = "logo")

@@ -1,9 +1,12 @@
 package com.cityservice.service.impl;
 
+import com.cityservice.exception.WrongDataException;
 import com.cityservice.mapper.CityMapper;
+import com.cityservice.model.City;
 import com.cityservice.repository.CityRepository;
 import com.cityservice.rest.dto.CityDto;
 import com.cityservice.service.CityService;
+import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,34 +20,36 @@ public class CityServiceImpl implements CityService {
     private final CityMapper cityMapper;
 
     @Override
-    public Page<CityDto> findUniqueCitiesName(Pageable pageable) {
-        return cityMapper.mapPageToDto(cityRepository.findUniqueCitiesName(pageable));
+    public Page<CityDto> findCities(Predicate predicate, Pageable pageable) {
+        Page<City> cityPage = cityRepository.findAll(predicate, pageable);
+        return cityPage.map(cityMapper::toDto);
     }
 
     @Override
-    public Page<CityDto> findCitiesByCountryName(Pageable pageable, String countryName) {
-        return cityMapper.mapPageToDto(cityRepository.findCitiesByCountryName(pageable, countryName));
+    public CityDto updateCity(CityDto cityDto) {
+        if (cityDto.getId() != null) {
+            return cityMapper.toDto(cityRepository.save(cityMapper.toEntity(cityDto)));
+        }
+        throw new WrongDataException("Citi have to contains id");
     }
-
-    @Override
-    public Page<CityDto> findCitiesWithLogo(Pageable pageable) {
-        return cityMapper.mapPageToDto(cityRepository.findCitiesWithLogo(pageable));
-    }
-
-    @Override
-    public Page<CityDto> findCitiesByName(Pageable pageable, String name) {
-        return cityMapper.mapPageToDto(cityRepository.searchByName(pageable, name + "%"));
-    }
-
-    @Override
-    public Page<CityDto> findCities(Pageable pageable) {
-        return cityMapper.mapPageToDto(cityRepository.getCities(pageable));
-    }
-
-    @Override
-    public void updateCity(CityDto cityDto) {
-        cityRepository.save(cityMapper.toEntity(cityDto));
-    }
-
-
 }
+
+//    @Override
+//    public Page<CityDto> findUniqueCitiesName(Pageable pageable) {
+//        return cityMapper.mapPageToDto(cityRepository.findUniqueCitiesName(pageable));
+//    }
+//
+//    @Override
+//    public Page<CityDto> findCitiesByCountryName(String countryName, Pageable pageable) {
+//        return cityMapper.mapPageToDto(cityRepository.findCitiesByCountryName(countryName, pageable));
+//    }
+//
+//    @Override
+//    public Page<CityDto> findCitiesWithLogo(Pageable pageable) {
+//        return cityMapper.mapPageToDto(cityRepository.findCitiesWithLogo(pageable));
+//    }
+//
+//    @Override
+//    public Page<CityDto> findCitiesByName(String name, Pageable pageable) {
+//        return cityMapper.mapPageToDto(cityRepository.searchByName(name + "%", pageable));
+//    }
