@@ -14,4 +14,6 @@ public interface CityService {
     Page<CityDto> findCitiesByName(Pageable pageable, String name);
 
     Page<CityDto> findCities(Pageable pageable);
+
+    void updateCity(CityDto cityDto);
 }

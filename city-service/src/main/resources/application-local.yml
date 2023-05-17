@@ -18,3 +18,7 @@ spring:
     user: root
     password: root
     drop-first: false
+
+city-service:
+  username: username
+  password: password

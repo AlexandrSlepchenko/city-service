@@ -1,3 +1,7 @@
 databaseChangeLog:
   - include:
-      file:
+      file: db/changelog/changes/20231605_create_table_countries.yaml
+  - include:
+      file: db/changelog/changes/20230516_create_table_city_name.yaml
+  - include:
+      file: db/changelog/changes/20230516_create_table_cities.yaml

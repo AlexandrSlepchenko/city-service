@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_table_city_name
+      author: Sliepchenko Aleksandr
+      preConditions:
+        - onFail: MARK_RAN
+          not:
+            tableExists:
+              tableName: city_names
+      changes:
+        - createTable:
+            tableName: city_names
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar

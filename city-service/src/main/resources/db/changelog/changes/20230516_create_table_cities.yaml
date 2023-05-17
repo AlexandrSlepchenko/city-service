@@ -18,9 +18,10 @@ databaseChangeLog:
                     primaryKey: true
               - column:
                   name: name
-                  type: varchar(255)
+                  type: bigint(255)
                   constraints:
                     nullable: false
+                    references: city_names(id)
               - column:
                   name: country
                   type: bigint

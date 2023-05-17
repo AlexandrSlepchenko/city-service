@@ -40,4 +40,11 @@ public class CityServiceImpl implements CityService {
     public Page<CityDto> findCities(Pageable pageable) {
         return cityMapper.mapPageToDto(cityRepository.getCities(pageable));
     }
+
+    @Override
+    public void updateCity(CityDto cityDto) {
+        cityRepository.save(cityMapper.toEntity(cityDto));
+    }
+
+
 }
