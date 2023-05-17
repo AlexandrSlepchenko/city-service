@@ -25,4 +25,19 @@ public class CityServiceImpl implements CityService {
     public Page<CityDto> findCitiesByCountryName(Pageable pageable, String countryName) {
         return cityMapper.mapPageToDto(cityRepository.findCitiesByCountryName(pageable, countryName));
     }
+
+    @Override
+    public Page<CityDto> findCitiesWithLogo(Pageable pageable) {
+        return cityMapper.mapPageToDto(cityRepository.findCitiesWithLogo(pageable));
+    }
+
+    @Override
+    public Page<CityDto> findCitiesByName(Pageable pageable, String name) {
+        return cityMapper.mapPageToDto(cityRepository.searchByName(pageable, name + "%"));
+    }
+
+    @Override
+    public Page<CityDto> findCities(Pageable pageable) {
+        return cityMapper.mapPageToDto(cityRepository.getCities(pageable));
+    }
 }

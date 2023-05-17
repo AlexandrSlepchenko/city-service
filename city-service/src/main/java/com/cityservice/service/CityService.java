@@ -8,4 +8,10 @@ public interface CityService {
     Page<CityDto> findUniqueCitiesName(Pageable pageable);
 
     Page<CityDto> findCitiesByCountryName(Pageable pageable, String countryName);
+
+    Page<CityDto> findCitiesWithLogo(Pageable pageable);
+
+    Page<CityDto> findCitiesByName(Pageable pageable, String name);
+
+    Page<CityDto> findCities(Pageable pageable);
 }
