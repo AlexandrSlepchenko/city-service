@@ -4,7 +4,6 @@ import com.cityservice.exception.WrongDataException;
 import com.cityservice.mapper.CityMapper;
 import com.cityservice.model.City;
 import com.cityservice.repository.CityRepository;
-import com.cityservice.repository.CitySearchRepository;
 import com.cityservice.rest.dto.CityDto;
 import com.cityservice.service.impl.CityServiceImpl;
 import com.querydsl.core.types.Predicate;
@@ -22,14 +21,15 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CityServiceImplTest {
-
-    @Mock
-    private CitySearchRepository citySearchRepository;
 
     @Mock
     private CityRepository cityRepository;
@@ -49,12 +49,12 @@ class CityServiceImplTest {
         List<CityDto> cityDtos = Collections.singletonList(new CityDto());
         Page<CityDto> expectedPage = new PageImpl<>(cityDtos);
 
-        when(citySearchRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(cityPage);
+        when(cityRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(cityPage);
         when(cityMapper.toDto(any(City.class))).thenReturn(new CityDto());
 
         Page<CityDto> result = cityService.findCities(predicate, pageable);
 
-        verify(citySearchRepository).findAll(any(Predicate.class), any(Pageable.class));
+        verify(cityRepository).findAll(any(Predicate.class), any(Pageable.class));
         verify(cityMapper, times(cities.size())).toDto(any(City.class));
         assertEquals(expectedPage.getSize(), result.getSize());
     }

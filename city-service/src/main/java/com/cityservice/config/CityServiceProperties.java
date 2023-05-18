@@ -13,4 +13,8 @@ public class CityServiceProperties {
     private String username;
     private String password;
 
+    public CityServiceProperties(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 }
