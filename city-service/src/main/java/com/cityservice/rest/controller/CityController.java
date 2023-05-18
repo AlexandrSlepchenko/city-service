@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/cities", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @RequiredArgsConstructor
-public class CityController {
+
+public class CityController{
 
     private final CityService cityService;
 
@@ -68,40 +69,3 @@ public class CityController {
         return cityService.updateCity(cityDto);
     }
 }
-
-//    @GetMapping(path = "/unique")
-//    public Page<CityDto> findUniqueCities(@PageableDefault(size = 50) Pageable pageable)
-//    {
-//        return cityService.findUniqueCitiesName(pageable);
-//    }
-//
-//    @GetMapping(path ="/countryName")
-//    public Page<CityDto> findCitiesByCountryName(
-//            @RequestParam(value = "countryName", required = false) String countryName,
-//            @PageableDefault(size = 50) Pageable pageable){
-//        return cityService.findCitiesByCountryName(countryName, pageable);
-//    }
-//
-//    @GetMapping(path = "/logo")
-//    public Page<CityDto> findCitiesWithLogo(
-//            @PageableDefault(size = 50) Pageable pageable)
-//            {
-//        return cityService.findCitiesWithLogo(pageable);
-//    }
-//
-//    @GetMapping(path = "/name")
-//    public Page<CityDto> findCitiesByName(
-//            @PageableDefault(size = 50) Pageable pageable,
-//            @RequestParam("name") String name) {
-//        return cityService.findCitiesByName(name, pageable);
-//    }
-//    @GetMapping
-//    public Page<CityDto> findCities(
-//            @RequestParam(value = "unique", required = false) Boolean uniqueOnly,
-//            @RequestParam(value = "countryName", required = false) String countryName,
-//            @RequestParam(value = "logo", required = false) String logo,
-//            @RequestParam(value = "name", required = false) String name,
-//            @PageableDefault(size = 50) Pageable pageable){
-//        return cityService.findCities(pageable);
-//    }
-//}

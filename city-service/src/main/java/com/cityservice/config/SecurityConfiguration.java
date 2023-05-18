@@ -1,6 +1,6 @@
 package com.cityservice.config;
 
-import com.cityservice.model.Role;
+import com.cityservice.model.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

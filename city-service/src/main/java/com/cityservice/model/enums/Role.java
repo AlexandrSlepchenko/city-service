@@ -1,4 +1,4 @@
-package com.cityservice.model;
+package com.cityservice.model.enums;
 
 public enum Role {
     EDITOR,

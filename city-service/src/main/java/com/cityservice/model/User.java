@@ -1,5 +1,6 @@
 package com.cityservice.model;
 
+import com.cityservice.model.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 

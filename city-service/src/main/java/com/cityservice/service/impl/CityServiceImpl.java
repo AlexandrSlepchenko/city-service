@@ -4,6 +4,7 @@ import com.cityservice.exception.WrongDataException;
 import com.cityservice.mapper.CityMapper;
 import com.cityservice.model.City;
 import com.cityservice.repository.CityRepository;
+import com.cityservice.repository.CitySearchRepository;
 import com.cityservice.rest.dto.CityDto;
 import com.cityservice.service.CityService;
 import com.querydsl.core.types.Predicate;
@@ -16,12 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityServiceImpl implements CityService {
 
+    private final CitySearchRepository citySearchRepository;
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
 
     @Override
     public Page<CityDto> findCities(Predicate predicate, Pageable pageable) {
-        Page<City> cityPage = cityRepository.findAll(predicate, pageable);
+        Page<City> cityPage = citySearchRepository.findAll(predicate, pageable);
         return cityPage.map(cityMapper::toDto);
     }
 
@@ -33,23 +35,3 @@ public class CityServiceImpl implements CityService {
         throw new WrongDataException("Citi have to contains id");
     }
 }
-
-//    @Override
-//    public Page<CityDto> findUniqueCitiesName(Pageable pageable) {
-//        return cityMapper.mapPageToDto(cityRepository.findUniqueCitiesName(pageable));
-//    }
-//
-//    @Override
-//    public Page<CityDto> findCitiesByCountryName(String countryName, Pageable pageable) {
-//        return cityMapper.mapPageToDto(cityRepository.findCitiesByCountryName(countryName, pageable));
-//    }
-//
-//    @Override
-//    public Page<CityDto> findCitiesWithLogo(Pageable pageable) {
-//        return cityMapper.mapPageToDto(cityRepository.findCitiesWithLogo(pageable));
-//    }
-//
-//    @Override
-//    public Page<CityDto> findCitiesByName(String name, Pageable pageable) {
-//        return cityMapper.mapPageToDto(cityRepository.searchByName(name + "%", pageable));
-//    }

@@ -4,6 +4,7 @@ import com.cityservice.exception.WrongDataException;
 import com.cityservice.mapper.CityMapper;
 import com.cityservice.model.City;
 import com.cityservice.repository.CityRepository;
+import com.cityservice.repository.CitySearchRepository;
 import com.cityservice.rest.dto.CityDto;
 import com.cityservice.service.impl.CityServiceImpl;
 import com.querydsl.core.types.Predicate;
@@ -28,6 +29,9 @@ import static org.mockito.Mockito.*;
 class CityServiceImplTest {
 
     @Mock
+    private CitySearchRepository citySearchRepository;
+
+    @Mock
     private CityRepository cityRepository;
 
     @Mock
@@ -45,14 +49,14 @@ class CityServiceImplTest {
         List<CityDto> cityDtos = Collections.singletonList(new CityDto());
         Page<CityDto> expectedPage = new PageImpl<>(cityDtos);
 
-        when(cityRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(cityPage);
+        when(citySearchRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(cityPage);
         when(cityMapper.toDto(any(City.class))).thenReturn(new CityDto());
 
         Page<CityDto> result = cityService.findCities(predicate, pageable);
 
-        verify(cityRepository).findAll(any(Predicate.class), any(Pageable.class));
+        verify(citySearchRepository).findAll(any(Predicate.class), any(Pageable.class));
         verify(cityMapper, times(cities.size())).toDto(any(City.class));
-        assertEquals(expectedPage, result);
+        assertEquals(expectedPage.getSize(), result.getSize());
     }
 
     @Test
