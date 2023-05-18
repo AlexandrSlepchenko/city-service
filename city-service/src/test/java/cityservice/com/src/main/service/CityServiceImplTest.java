@@ -92,7 +92,7 @@ class CityServiceImplTest {
     }
 
     @Test
-    void updateCity_NullId_ThrowsWrongDataException() {
+    void updateCityNullIdTest() {
         CityDto cityDto = new CityDto();
 
         assertThrows(WrongDataException.class, () -> cityService.updateCity(cityDto));

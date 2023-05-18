@@ -29,7 +29,7 @@ class CityControllerTests {
     private CityController cityController;
 
     @Test
-    void findCities_WithParameters_ReturnsPageOfCityDto() {
+    void findCitiesTests() {
         String name = "City";
         String countryName = "Country";
         Boolean hasLogo = true;
@@ -46,7 +46,7 @@ class CityControllerTests {
     }
 
     @Test
-    void updateCity_ValidCityDto_ReturnsUpdatedCityDto() {
+    void updateCityTest() {
         CityDto cityDto = new CityDto();
         CityDto expectedCityDto = new CityDto();
 
