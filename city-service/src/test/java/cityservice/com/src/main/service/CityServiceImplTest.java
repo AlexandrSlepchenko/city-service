@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -41,26 +39,39 @@ class CityServiceImplTest {
     private CityServiceImpl cityService;
 
     @Test
-    void findCities_ValidPredicateAndPageable_ReturnsPageOfCityDto() {
-        Predicate predicate = mock(Predicate.class);
+    void findCitiesPredicateEmptyTest() {
         Pageable pageable = mock(Pageable.class);
-        List<City> cities = Collections.singletonList(new City());
-        Page<City> cityPage = new PageImpl<>(cities);
-        List<CityDto> cityDtos = Collections.singletonList(new CityDto());
-        Page<CityDto> expectedPage = new PageImpl<>(cityDtos);
+        Page<City> cityPage = new PageImpl<>(List.of(new City()));
+        Page<CityDto> cityDtoPage = new PageImpl<>(List.of(new CityDto()));
 
-        when(cityRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(cityPage);
+        when(cityRepository.findAll(any(Pageable.class))).thenReturn(cityPage);
         when(cityMapper.toDto(any(City.class))).thenReturn(new CityDto());
 
-        Page<CityDto> result = cityService.findCities(predicate, pageable);
+        Page<CityDto> result = cityService.findCities(null, null, null, null, pageable);
 
-        verify(cityRepository).findAll(any(Predicate.class), any(Pageable.class));
-        verify(cityMapper, times(cities.size())).toDto(any(City.class));
-        assertEquals(expectedPage.getSize(), result.getSize());
+        assertEquals(cityDtoPage.getSize(), result.getSize());
     }
 
     @Test
-    void updateCity_ValidCityDto_ReturnsUpdatedCityDto() {
+    void findCitiesPredicateNotEmptyTest() {
+        String name = "City";
+        String countryName = "Country";
+        Boolean hasLogo = true;
+        Boolean isUnique = true;
+        Pageable pageable = mock(Pageable.class);
+        Page<CityDto> cityDtoPage = new PageImpl<>(List.of(new CityDto()));
+
+        when(cityRepository.findAll(any(Predicate.class), any(Pageable.class))).thenReturn(new PageImpl<>(List.of(new City())));
+        when(cityMapper.toDto(any(City.class))).thenReturn(new CityDto());
+
+        Page<CityDto> result = cityService.findCities(name, countryName, hasLogo, isUnique, pageable);
+
+        assertEquals(1, result.getSize());
+        assertEquals(cityDtoPage.getSize(), result.getContent().size());
+    }
+
+    @Test
+    void updateCityTest() {
         CityDto cityDto = new CityDto();
         cityDto.setId(1L);
         City city = new City();

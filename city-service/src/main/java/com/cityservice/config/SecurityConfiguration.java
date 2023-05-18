@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                 .passwordEncoder(s -> passwordEncoder().encode(s))
                 .username(cityServiceProperties.getUsername())
                 .password(cityServiceProperties.getPassword())
-                .roles(Role.EDITOR.name(), Role.READONLY.name())
+                .roles(Role.EDITOR.name())
                 .build();
         return new InMemoryUserDetailsManager(user);
     }

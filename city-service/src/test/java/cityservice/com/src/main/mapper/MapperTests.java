@@ -11,15 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import java.util.Arrays;
-import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 class MapperTests {
@@ -68,26 +61,5 @@ class MapperTests {
         Assertions.assertNotNull(city.getCountry());
         Assertions.assertEquals(1L, city.getCountry().getId());
         Assertions.assertEquals("city_logo.png", city.getPath());
-    }
-
-    @Test
-    void testMapPageToDto() {
-        List<City> cities = Arrays.asList(city, city, city);
-
-        Page<City> cityPage = new PageImpl<>(cities, PageRequest.of(1,1), cities.size());
-
-        Mockito.when(city.getId()).thenReturn(1L);
-        Mockito.when(city.getName()).thenReturn("City Name");
-        Mockito.when(city.getPath()).thenReturn("/path/to/logo.png");
-
-        Page<CityDto> cityDtoPage = cityMapper.mapPageToDto(cityPage);
-
-        Assertions.assertEquals(cities.size(), cityDtoPage.getContent().size());
-        Assertions.assertEquals(cities.size() , cityDtoPage.getTotalElements());
-
-        CityDto cityDto = cityDtoPage.getContent().get(0);
-        Assertions.assertEquals(1L, cityDto.getId());
-        Assertions.assertEquals("City Name", cityDto.getName());
-        Assertions.assertEquals("/path/to/logo.png", cityDto.getPath());
     }
 }

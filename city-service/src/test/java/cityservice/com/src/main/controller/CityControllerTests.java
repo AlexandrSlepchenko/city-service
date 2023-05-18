@@ -37,11 +37,11 @@ class CityControllerTests {
         Pageable pageable = mock(Pageable.class);
         Page<CityDto> expectedPage = new PageImpl<>(List.of(new CityDto()));
 
-        when(cityService.findCities(any(), any())).thenReturn(expectedPage);
+        when(cityService.findCities(any(), any(), any(), any(), any())).thenReturn(expectedPage);
 
         Page<CityDto> result = cityController.findCities(name, countryName, hasLogo, isUnique, pageable);
 
-        verify(cityService).findCities(any(), any());
+        verify(cityService).findCities(any(), any(), any(), any(), any());
         assertEquals(expectedPage, result);
     }
 

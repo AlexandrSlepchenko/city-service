@@ -31,5 +31,5 @@ public class City {
     private Country country;
 
     @Column(name = "logo")
-    private String path ="";
+    private String path;
 }

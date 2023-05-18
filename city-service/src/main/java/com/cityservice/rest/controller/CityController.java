@@ -1,11 +1,7 @@
 package com.cityservice.rest.controller;
 
-import com.cityservice.model.QCity;
 import com.cityservice.rest.dto.CityDto;
 import com.cityservice.service.CityService;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.JPAExpressions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,34 +29,7 @@ public class CityController{
             @RequestParam(value = "logo", required = false) Boolean hasLogo,
             @RequestParam(value = "unique", required = false) Boolean isUnique,
             Pageable pageable) {
-
-        QCity qCity = QCity.city;
-        BooleanBuilder predicateBuilder = new BooleanBuilder();
-
-        if (name != null) {
-            predicateBuilder.and(qCity.name.containsIgnoreCase(name));
-        }
-
-        if (countryName != null) {
-            predicateBuilder.and(qCity.country.name.equalsIgnoreCase(countryName));
-        }
-
-        if (hasLogo != null && hasLogo) {
-            predicateBuilder.and(qCity.path.isNotNull());
-        }
-
-        if (isUnique != null && isUnique) {
-            predicateBuilder.and(qCity.name.isNotNull()).and(qCity.name.notIn(
-                    JPAExpressions.select(qCity.name)
-                            .from(qCity)
-                            .groupBy(qCity.name)
-                            .having(qCity.name.count().gt(1))
-            ));
-        }
-
-        Predicate predicate = predicateBuilder.getValue();
-
-        return cityService.findCities(predicate, pageable);
+        return cityService.findCities(name, countryName , hasLogo, isUnique, pageable);
     }
 
     @PreAuthorize("hasRole('EDITOR')")
